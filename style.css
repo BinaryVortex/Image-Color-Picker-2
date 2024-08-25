@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(to bottom right, #57f5bb, #61adff);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container > h1 {
+    text-shadow: 1px 1px rgb(200, 200, 200);
+}
+
+
+.file-upload-form {
+    margin: 20px;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload-label input {
+    display: none;
+}
+
+.file-upload-label svg {
+    height: 50px;
+    fill: rgb(82, 82, 82);
+    margin-bottom: 20px;
+}
+.file-upload-label {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 30px 200px;
+    border-radius: 40px;
+    border: 2px dashed rgb(82, 82, 82);
+    box-shadow: 0px 0px 200px -50px rgba(0, 0, 0, 0.719);
+}
+
+.file-upload-design {
+    display: flex;
+    font-size: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.browse-button {
+    background-color: rgb(82, 82, 82);
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: white;
+    transition: all 0.3s;
+}
+
+.browse-button:hover {
+    background-color: rgb(14, 14, 14);
+}   
+
+.result {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+}
+
+.result img {
+    width: 100%;
+    margin: 20px 0px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons button {
+    padding: 5px 15px;
+    font-size: 18px;
+    background-color:  #0a8550;
+    color: #ffff;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color:  #1a6d49;
+}
+
+.color-result {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    padding: 25px;
+    margin-top: 10px;
+}
+
+.colors {
+    width: 300px;
+}
+
+.colors input {
+    font-size: 17px;
+    outline: none;
+    border: none;
+    width: 200px;
+    padding: 5px;
+    background-color: transparent;
+    border-bottom: 1px solid;
+    cursor: pointer;
+}
+
+.colors input:hover {
+    background-color: rgb(255, 255, 255);
+}
+
+.colors label {
+    font-size: 17px;
+    width: 70px;
+}
+
+.color-display {
+    width: 100px;
+}

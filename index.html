@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Color Picker</title>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+    <div class="main">
+
+        <div class="container">
+            <h1>Image Color Picker</h1>
+            <p>Upload an image and pick a color from it.</p>
+            <div class="error"></div>
+            <form class="file-upload-form">
+                <label for="file" class="file-upload-label">
+                    <div class="file-upload-design">
+                        <svg viewBox="0 0 640 512" height="1em">
+                        <path
+                            d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"
+                        ></path>
+                        </svg>
+                        <p>Drag and Drop</p>
+                        <p>or</p>
+                        <span class="browse-button">Browse file</span>
+                    </div>
+                    <input id="file" type="file" />
+                </label>
+            </form>
+
+            <div class="result" style="display: none;">
+                <img id="uploadedImage" src="" alt="">
+
+                <div class="buttons">
+                    <button onclick="location.reload()">Upload Again</button>
+                    <button onclick="pickColor()">Pick Color</button>
+                </div>
+
+                <div class="color-result">
+                    <div class="colors">
+                        <div class="color-group">
+                            <label for="rgb">RGB:</label>
+                            <input type="text" id="rgbResult" onclick="copyRgbCode()" readonly>
+                        </div>
+                        <div class="color-group">
+                            <label for="hex-result">HEX:</label>
+                            <input type="text" id="hexResult" onclick="copyHexCode()" readonly>
+                        </div>
+                    </div>
+                    <div class="color-display" id="displayColor" style="background-color: #ffff;"></div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function() {
+            var file = this.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                document.getElementById('uploadedImage').src = e.target.result;
+                document.querySelector('.file-upload-form').style.display = 'none';
+                document.querySelector('.result').style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+                
+
+        let error = document.querySelector('.error');
+        let eyeDropper;
+
+        window.onload = () => {
+            if ("EyeDropper" in window) {
+                eyeDropper = new EyeDropper();
+            } else {
+                error.classList.remove("hide");
+                error.innerText = "Your browser doesn't support Eyedropper API";
+                return false;
+            }
+        };
+
+        const pickColor = async () => {
+            const color = await eyeDropper
+                .open()
+                .then((colorValue) => {
+                    error.classList.add("hide");
+                    let hexValue = colorValue.sRGBHex;
+                    let rgbArr = [];
+                    for (let i = 1; i < hexValue.length; i += 2) {
+                        rgbArr.push(parseInt(hexValue[i] + hexValue[i + 1], 16));
+                    }
+                    let rgbValue = "rgb(" + rgbArr.join(', ') + ")";
+                    document.getElementById('uploadedImage').style.display = "grid";
+                    document.getElementById('hexResult').value = hexValue;
+                    document.getElementById('rgbResult').value = rgbValue;
+                    document.getElementById('displayColor').style.backgroundColor = hexValue;
+                })
+                .catch((err) => {
+                    error.classList.remove("hide");
+                    //If user presses escape to close the eyedropper
+                    if (err.toString().includes("AbortError")) {
+                        error.innerText = "";
+                    } else {
+                        error.innerText = err;
+                    }
+                });
+        };
+
+        function copyHexCode() {
+            const hexInput = document.getElementById('hexResult');
+            hexInput.select();
+            hexInput.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand('copy');
+            alert('Hexadecimal color code copied to clipboard: ' + hexInput.value);
+        }
+
+        function copyRgbCode() {
+            const rgbInput = document.getElementById('rgbResult');
+            rgbInput.select();
+            rgbInput.setSelectionRange(0, 99999); /* For mobile devices */
+            document.execCommand('copy');
+            alert('RGB color code copied to clipboard: ' + rgbInput.value);
+        }
+
+    </script>
+
+    <script src="https://resources.whatwg.org/eyedropper.js"></script>
+
+    <!-- Script JS -->
+    <link rel="stylesheet" href="./script.js">
+</body>
+</html>
